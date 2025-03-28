@@ -55,6 +55,22 @@ This project requires an API key for Ticketmaster. Add the following to your `.e
 REACT_APP_TICKETMASTER_API_KEY=your_actual_api_key
 ```
 
+## Screenshots
+
+Here are some screenshots of the Local Event Explorer:
+
+### Home Page
+
+![Home Page](./screenshots/Home%20page.png)
+
+### Main Page
+
+![Main Page](./screenshots/Main%20page.png)
+
+### Events Section
+
+![Events Section](./screenshots/Events%20section.png)
+
 ## Scripts
 
 - `npm run dev`: Start the development server.
@@ -76,3 +92,7 @@ REACT_APP_TICKETMASTER_API_KEY=your_actual_api_key
 - [OpenStreetMap](https://www.openstreetmap.org/)
 - [Ticketmaster API](https://developer.ticketmaster.com/)
 - [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page)
+
+## Thank You
+
+Thank you for checking out the Local Event Explorer! We hope you find it useful and enjoyable. If you have any feedback or suggestions, feel free to contribute or reach out. Happy exploring!

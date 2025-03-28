@@ -109,7 +109,7 @@ export default function Main() {
 
     const fetchEvents = async (lat, lon) => {
         try {
-            const apiKey = process.env.REACT_APP_TICKETMASTER_API_KEY; // Use environment variable
+            const apiKey = import.meta.env.VITE_REACT_APP_TICKETMASTER_API_KEY;
             const response = await fetch(
                 `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${apiKey}&latlong=${lat},${lon}&radius=100&unit=km`
             );
