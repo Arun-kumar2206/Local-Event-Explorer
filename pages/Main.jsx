@@ -138,7 +138,7 @@ export default function Main() {
                     <MapContainer
                         center={position}
                         zoom={13}
-                        style={{ height: "100%", width: "100%" }}
+                        style={{ height: "100%", width: "100%", minHeight: "300px" }} // Add minHeight for mobile
                     >
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
