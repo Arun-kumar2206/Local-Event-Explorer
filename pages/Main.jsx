@@ -2,6 +2,20 @@ import { useState, memo, useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useSearchParams } from "react-router-dom"; 
+import L from "leaflet";
+
+// Fix for missing marker icons
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import markerRetina from "leaflet/dist/images/marker-icon-2x.png";
+
+// Configure default marker icons
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: markerRetina,
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow,
+});
 
 const NavBar = memo(function navBar({ onSearch }) {
     const [searchValue, setSearchValue] = useState("");
