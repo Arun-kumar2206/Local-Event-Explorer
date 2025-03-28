@@ -1,23 +1,21 @@
 import BlurText from "../animations/BlurText";
 import { useState, memo } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = memo(function SearchBar() {
     const [searchValue, setSearchValue] = useState("");
     const [error, setError] = useState(false);
-    
-    const handleSearchAndNavigate = () => {
-        console.log("Searching for:", searchValue);
-        setError(false);
+    const navigate = useNavigate();
 
+    const handleSearchAndNavigate = () => {
         if (!searchValue.trim()) {
             setError(true);
             return;
         }
-        
         const encodedLocation = encodeURIComponent(searchValue.trim());
-        window.location.href = `/main?location=${encodedLocation}`;
+        navigate(`/main?location=${encodedLocation}`);
     };
-    
+
     return (
         <div className="search-container">
             <input
@@ -60,7 +58,6 @@ const Header = memo(function Header({ onAnimationComplete }) {
     );
 });
 
-
 export default function Home() {
     const handleAnimationComplete = () => {
         console.log("Animation completed!");
@@ -70,9 +67,9 @@ export default function Home() {
         <div className="home-background">
             <div className="header">
                 <Header onAnimationComplete={handleAnimationComplete} />
-                <SearchBar />
-                <h2 className="discover-text">Discover amazing events happening in your area</h2>
             </div>
+            <SearchBar />
+            <h2 className="discover-text">Discover amazing events happening in your area</h2>
         </div>
     );
 }
