@@ -1,5 +1,5 @@
 {
-  "homepage": "https://github.com/Arun-kumar2206/Local-Event-Explorer",
+  "homepage": "https://<your-github-username>.github.io/Local-Event-Explorer/",
   "name": "local-event-explorer",
   "private": true,
   "version": "0.0.0",
@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist --repo https://github.com/Arun-kumar2206/Local-Event-Explorer.git"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@react-spring/web": "^9.7.5",
