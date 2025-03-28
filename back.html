@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <link rel="stylesheet" href="CSS/styles.css" />
+    <link rel="stylesheet" href="CSS/normalize.css" />
+  </head>
+  <body>
+    <div>
+      <input
+        type="text"
+        id="city-search"
+        placeholder="Enter a city name"
+        style="
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          z-index: 1000;
+          padding: 5px;
+        "
+      />
+      <button
+        id="search-btn"
+        style="
+          position: absolute;
+          top: 10px;
+          left: 200px;
+          z-index: 1000;
+          padding: 5px;
+        "
+      >
+        Search
+      </button>
+    </div>
+    <div id="map"></div>
+    <div
+      id="events"
+      style="
+        position: absolute;
+        top: 70px;
+        left: 10px;
+        z-index: 1000;
+        background: white;
+        padding: 10px;
+        max-width: 300px;
+        overflow-y: auto;
+        max-height: 400px;
+        border: 1px solid #ccc;
+      "
+    >
+      <h3>Local Events</h3>
+      <ul id="events-list" style="list-style: none; padding: 0; margin: 0"></ul>
+    </div>
+
+    <!-- Add City Information Section -->
+    <div
+      id="city-info"
+      style="
+        position: absolute;
+        top: 490px;
+        left: 10px;
+        z-index: 1000;
+        background: white;
+        padding: 10px;
+        max-width: 300px;
+        overflow-y: auto;
+        max-height: 400px;
+        border: 1px solid #ccc;
+      "
+    >
+      <h3>City Information</h3>
+      <div id="wiki-content">
+        <p>Search for a city to see information</p>
+      </div>
+    </div>
+
+    <script>
+      var map = L.map("map").setView([51.505, -0.09], 13);
+
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      var marker = L.marker([51.5, -0.09])
+        .addTo(map)
+        .bindPopup("A pretty CSS popup.<br> Easily customizable.")
+        .openPopup();
+
+      var eventMarkers = [];
+
+      document
+        .getElementById("search-btn")
+        .addEventListener("click", function () {
+          var city = document.getElementById("city-search").value;
+          if (city) {
+            fetch(
+              `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+                city
+              )}&format=json`
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.length > 0) {
+                  var lat = data[0].lat;
+                  var lng = data[0].lon;
+                  console.log(`latitude: ${lat}, longitude: ${lng}`);
+                  map.setView([lat, lng], 13);
+                  marker.setLatLng([lat, lng]).bindPopup(`${city}`).openPopup();
+                  fetchLocalEvents(lat, lng);
+                  fetchCityInfo(city);
+                } else {
+                  alert("City not found!");
+                }
+              })
+              .catch((error) => {
+                console.error("Error fetching geocode data:", error);
+                alert("An error occurred while fetching the city data.");
+              });
+          } else {
+            alert("Please enter a city name.");
+          }
+        });
+
+      function fetchLocalEvents(lat, lng) {
+        const apiKey = "GxPF6ejKKkdbnaAuMZj3kVdmDSIdMLbz"; // Replace with your Ticketmaster API key
+        fetch(
+          `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${apiKey}&latlong=${lat},${lng}&radius=500&unit=km`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            var eventsList = document.getElementById("events-list");
+            eventsList.innerHTML = ""; // Clear previous events
+
+            // Remove existing event markers from the map
+            eventMarkers.forEach((m) => map.removeLayer(m));
+            eventMarkers = [];
+
+            if (data._embedded && data._embedded.events) {
+              data._embedded.events.forEach((event) => {
+                var listItem = document.createElement("li");
+                var imageUrl =
+                  event.images && event.images.length > 0
+                    ? event.images[0].url
+                    : "https://via.placeholder.com/150";
+                listItem.innerHTML = `
+                  <div class="event-item">
+                    <img src="${imageUrl}" alt="${event.name}" class="event-image" />
+                    <a href="${event.url}" target="_blank" class="event-link">${event.name}</a>
+                    <p class="event-date">${event.dates.start.localDate}</p>
+                  </div>`;
+                eventsList.appendChild(listItem);
+
+                // Add a marker for the event
+                if (
+                  event._embedded &&
+                  event._embedded.venues &&
+                  event._embedded.venues[0]
+                ) {
+                  var venue = event._embedded.venues[0];
+                  if (venue.location) {
+                    var eventMarker = L.marker([
+                      venue.location.latitude,
+                      venue.location.longitude,
+                    ])
+                      .addTo(map)
+                      .bindPopup(
+                        `<strong>${event.name}</strong><br>${venue.name}`
+                      );
+                    eventMarkers.push(eventMarker);
+                  }
+                }
+              });
+            } else {
+              eventsList.innerHTML = "<li>No local events found.</li>";
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching events data:", error);
+            alert("An error occurred while fetching local events.");
+          });
+      }
+
+      function fetchCityInfo(cityName) {
+        // Clear previous content
+        document.getElementById("wiki-content").innerHTML = "<p>Loading...</p>";
+
+        // Fetch data from Wikipedia API
+        fetch(
+          `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(
+            cityName
+          )}`
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Wikipedia page not found");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            let content = "";
+
+            // Check if thumbnail exists
+            if (data.thumbnail) {
+              content += `<img src="${data.thumbnail.source}" alt="${cityName}" class="wiki-image">`;
+            }
+
+            // Add title and description
+            content += `<h4>${data.title}</h4>`;
+            content += `<p>${data.extract}</p>`;
+
+            // Add link to full Wikipedia article
+            content += `<a href="${data.content_urls.desktop.page}" target="_blank" class="wiki-link">Read more on Wikipedia</a>`;
+
+            document.getElementById("wiki-content").innerHTML = content;
+          })
+          .catch((error) => {
+            console.error("Error fetching Wikipedia data:", error);
+            document.getElementById(
+              "wiki-content"
+            ).innerHTML = `<p>Could not find information about ${cityName}. Try another search term.</p>`;
+          });
+      }
+    </script>
+  </body>
+</html>
