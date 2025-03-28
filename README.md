@@ -55,6 +55,11 @@ This project requires an API key for Ticketmaster. Add the following to your `.e
 REACT_APP_TICKETMASTER_API_KEY=your_actual_api_key
 ```
 
+## Live Demo
+
+You can view the website using this link: [Local Event Explorer](https://arun-kumar2206.github.io/Local-Event-Explorer/)
+
+
 ## Screenshots
 
 Here are some screenshots of the Local Event Explorer:
