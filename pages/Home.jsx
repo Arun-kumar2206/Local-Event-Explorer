@@ -7,19 +7,15 @@ const SearchBar = memo(function SearchBar() {
     
     const handleSearchAndNavigate = () => {
         console.log("Searching for:", searchValue);
-        // Reset any previous error state
         setError(false);
-        
-        // Check if search value is empty
+
         if (!searchValue.trim()) {
             setError(true);
-            return; // Prevent navigation if search is empty
+            return;
         }
         
-        // First handle the search
-        
-        // Then navigate to the main page
-        window.location.href = "/main";
+        const encodedLocation = encodeURIComponent(searchValue.trim());
+        window.location.href = `/main?location=${encodedLocation}`;
     };
     
     return (
@@ -64,15 +60,6 @@ const Header = memo(function Header({ onAnimationComplete }) {
     );
 });
 
-const Contact = memo(function Contact() {
-    return(
-        <div className="contact-section">
-            <button className="contact-btn">HOME</button>
-            <button className="contact-btn">ABOUT</button>
-            <button className="contact-btn">CONTACT</button>
-        </div>
-    )
-});
 
 export default function Home() {
     const handleAnimationComplete = () => {
@@ -85,7 +72,6 @@ export default function Home() {
                 <Header onAnimationComplete={handleAnimationComplete} />
                 <SearchBar />
                 <h2 className="discover-text">Discover amazing events happening in your area</h2>
-                <Contact />
             </div>
         </div>
     );

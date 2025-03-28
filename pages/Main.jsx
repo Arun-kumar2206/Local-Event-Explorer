@@ -1,6 +1,7 @@
 import { useState, memo, useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { useSearchParams } from "react-router-dom"; 
 
 const NavBar = memo(function navBar({ onSearch }) {
     const [searchValue, setSearchValue] = useState("");
@@ -28,6 +29,11 @@ const NavBar = memo(function navBar({ onSearch }) {
                     placeholder="Change Location"
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            handleSearch();
+                        }
+                    }}
                 />
                 <button 
                     className="search-button main-search-btn" 
@@ -42,16 +48,24 @@ const NavBar = memo(function navBar({ onSearch }) {
 
 function MapUpdater({ position }) {
     const map = useMap();
-    map.setView(position, 13); // Automatically pan to the new position
+    map.setView(position, 13);
     return null;
 }
 
 export default function Main() {
+    const [searchParams] = useSearchParams(); 
     const [position, setPosition] = useState([51.505, -0.09]);
     const [cityInfo, setCityInfo] = useState("");
     const [cityImage, setCityImage] = useState("");
     const [events, setEvents] = useState([]);
-    const eventsContainerRef = useRef(null); // Reference to the events container
+    const eventsContainerRef = useRef(null);
+
+    useEffect(() => {
+        const location = searchParams.get("location"); 
+        if (location) {
+            handleSearch(location); 
+        }
+    }, [searchParams]);
 
     const handleSearch = async (location) => {
         try {
@@ -62,8 +76,8 @@ export default function Main() {
             if (data.length > 0) {
                 const { lat, lon, display_name } = data[0];
                 setPosition([parseFloat(lat), parseFloat(lon)]);
-                fetchCityInfo(display_name.split(",")[0]); // Use the city name for Wikipedia API
-                fetchEvents(lat, lon); // Fetch events for the location
+                fetchCityInfo(display_name.split(",")[0]); 
+                fetchEvents(lat, lon); 
             } else {
                 alert("Location not found!");
             }
@@ -81,7 +95,7 @@ export default function Main() {
             const data = await response.json();
             if (data.extract) {
                 setCityInfo(data.extract);
-                setCityImage(data.thumbnail?.source || ""); // Set the image if available
+                setCityImage(data.thumbnail?.source || "");
             } else {
                 setCityInfo("No information available for this location.");
                 setCityImage("");
@@ -100,15 +114,10 @@ export default function Main() {
             );
             const data = await response.json();
 
-            // Debug: Log the API response to check for issues
-            console.log("Ticketmaster API Response:", data);
-
             if (data._embedded && data._embedded.events) {
-                // Filter events with valid URLs
                 const validEvents = data._embedded.events.filter(event => event.url && event.url.trim() !== "");
                 setEvents(validEvents);
 
-                // Scroll to the events container
                 if (eventsContainerRef.current) {
                     eventsContainerRef.current.scrollIntoView({ behavior: "smooth" });
                 }

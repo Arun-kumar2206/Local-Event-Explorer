@@ -13,7 +13,6 @@ body {
     min-height: 100vh;
 }
 
-/* Page-specific background styles */
 .home-background {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('../images/background1.webp');
     background-size: cover;
@@ -33,7 +32,6 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    /* margin-top: 5rem; */
 }
 
 .main-title .text-2xl {
@@ -173,49 +171,10 @@ body {
     }
 }
 
-.contact-section{
-    display: flex;
-    margin-top: 8rem;
-    gap: 3rem; 
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.contact-section .contact-btn{
-    display: flex;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25), inset 0 2px 5px rgba(0, 0, 0, 0.15);
-    outline: none;
-    padding: 1.5rem 4rem;
-    border-radius: 3rem;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1.4rem;
-    color: #fff;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    justify-content: center;
-    align-items: center;
-    min-width: 12rem;
-    backdrop-filter: blur(5px);
-}
-
-.contact-section .contact-btn:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-}
-
-.contact-section .contact-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
 .discover-text {
     font-size: 1.8rem;
     text-align: center;
-    margin: 2.5rem 0;
+    margin: 11rem 0;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.9);
     letter-spacing: 0.5px;
@@ -250,7 +209,6 @@ body {
     }
 }
 
-/* Navigation Bar Styles */
 .nav-bar {
     display: flex;
     justify-content: space-between;
@@ -261,7 +219,7 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
-    z-index: 1000; /* Increased z-index to ensure it stays above the map */
+    z-index: 1000; 
 }
 
 .nav-bar-title h2 a {
@@ -280,7 +238,6 @@ body {
     width: 30rem;
 }
 
-/* Main search button specific styling */
 .main-search-btn {
     background: #FC6B58;
     box-shadow: 0 4px 15px rgba(252, 107, 88, 0.4);
@@ -328,8 +285,8 @@ body {
 
 .content-container {
     display: flex;
-    flex-direction: row-reverse; /* Place the map on the right and city info on the left */
-    height: 500px; /* Ensure consistent height for both sections */
+    flex-direction: row-reverse; 
+    height: 500px;
     max-width: 100%;
     margin: 2rem auto;
     gap: 2rem;
@@ -338,17 +295,17 @@ body {
 }
 
 .map-container {
-    flex: 8; /* 70% width */
-    height: 100%; /* Match the height of the city info */
+    flex: 8; 
+    height: 100%; 
     border-radius: 1rem;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .city-info {
-    flex: 2; /* 30% width */
-    height: 100%; /* Match the height of the map */
-    max-height: 500px; /* Ensure it does not exceed the map's height */
+    flex: 2; 
+    height: 100%; 
+    max-height: 500px; 
     padding: 2rem;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 1rem;
@@ -356,7 +313,7 @@ body {
     font-size: 1.6rem;
     line-height: 1.8;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    overflow-y: auto; /* Enable scrolling for overflow content */
+    overflow-y: auto;
 }
 
 .city-info h3 {
@@ -372,13 +329,13 @@ body {
 
 @media (max-width: 768px) {
     .content-container {
-        flex-direction: column; /* Stack map and city info vertically on smaller screens */
+        flex-direction: column; 
         height: auto;
     }
 
     .map-container {
         flex: none;
-        height: 300px; /* Adjust height for smaller screens */
+        height: 300px; 
     }
 
     .city-info {
@@ -417,33 +374,33 @@ body {
 }
 
 .event-item {
-    background: linear-gradient(135deg, #EEE2CB, #D4A373); /* Gradient background */
-    border-radius: 1rem; /* Increased border radius for a softer look */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+    background: linear-gradient(135deg, #EEE2CB, #D4A373); 
+    border-radius: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between; /* Better spacing between elements */
-    width: 150px; /* Increased width */
-    height: 300px; /* Increased height */
+    justify-content: space-between; 
+    width: 150px; 
+    height: 300px; 
     padding: 1rem;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden; /* Ensure content stays within bounds */
+    overflow: hidden; 
 }
 
 .event-item:hover {
-    transform: translateY(-8px); /* More pronounced hover effect */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+    transform: translateY(-8px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); 
 }
 
 .event-item img.event-image {
-    width: 90px; /* Slightly larger image */
+    width: 90px; 
     height: 90px;
     object-fit: cover;
-    border-radius: 50%; /* Circular image for a modern look */
+    border-radius: 50%; 
     margin-bottom: 0.8rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow for the image */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
 }
 
 .event-item a {
@@ -457,7 +414,7 @@ body {
 }
 
 .event-item a:hover {
-    color: #5b86e5; /* Highlight link on hover */
+    color: #5b86e5; 
     text-decoration: underline;
 }
 
@@ -465,6 +422,5 @@ body {
     margin: 0.5rem 0 0;
     font-size: 1.2rem;
     color: #555;
-    font-style: italic; /* Subtle styling for event date */
+    font-style: italic; 
 }
-
