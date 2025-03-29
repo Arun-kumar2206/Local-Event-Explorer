@@ -59,7 +59,6 @@ REACT_APP_TICKETMASTER_API_KEY=your_actual_api_key
 
 You can view the website using this link: [Local Event Explorer](https://arun-kumar2206.github.io/Local-Event-Explorer/)
 
-
 ## Screenshots
 
 Here are some screenshots of the Local Event Explorer:
@@ -97,6 +96,10 @@ Here are some screenshots of the Local Event Explorer:
 - [OpenStreetMap](https://www.openstreetmap.org/)
 - [Ticketmaster API](https://developer.ticketmaster.com/)
 - [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page)
+
+## License
+
+[MIT License](LICENSE)
 
 ## Thank You
 
