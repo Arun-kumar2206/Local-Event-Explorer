@@ -23,7 +23,7 @@ Follow these steps to set up and run the project locally.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/local-event-explorer.git
+   https://github.com/Arun-kumar2206/Local-Event-Explorer.git
    cd local-event-explorer
    ```
 
@@ -54,6 +54,11 @@ This project requires an API key for Ticketmaster. Add the following to your `.e
 ```
 REACT_APP_TICKETMASTER_API_KEY=your_actual_api_key
 ```
+
+## Live Demo
+
+You can view the website using this link: [Local Event Explorer](https://arun-kumar2206.github.io/Local-Event-Explorer/)
+
 
 ## Screenshots
 
