@@ -23,7 +23,7 @@ Follow these steps to set up and run the project locally.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/local-event-explorer.git
+   https://github.com/Arun-kumar2206/Local-Event-Explorer.git
    cd local-event-explorer
    ```
 
