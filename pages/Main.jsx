@@ -1,7 +1,7 @@
 import { useState, memo, useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useSearchParams } from "react-router-dom"; 
+import { useSearchParams, useNavigate } from "react-router-dom"; 
 import L from "leaflet";
 
 import markerIcon from "leaflet/dist/images/marker-icon.png";
@@ -17,10 +17,11 @@ L.Icon.Default.mergeOptions({
 
 const NavBar = memo(function navBar({ onSearch }) {
     const [searchValue, setSearchValue] = useState("");
+    const navigate = useNavigate();
 
     const handleNavigation = (e) => {
         e.preventDefault();
-        window.location.href = "/Local-Event-Explorer/";
+        navigate("/");
     };
 
     const handleSearch = () => {
