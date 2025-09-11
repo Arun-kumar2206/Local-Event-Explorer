@@ -4,12 +4,10 @@ import "leaflet/dist/leaflet.css";
 import { useSearchParams } from "react-router-dom"; 
 import L from "leaflet";
 
-// Fix for missing marker icons
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import markerRetina from "leaflet/dist/images/marker-icon-2x.png";
 
-// Configure default marker icons
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
     iconRetinaUrl: markerRetina,
@@ -22,7 +20,7 @@ const NavBar = memo(function navBar({ onSearch }) {
 
     const handleNavigation = (e) => {
         e.preventDefault();
-        window.location.href = "/";
+        window.location.href = "/Local-Event-Explorer/";
     };
 
     const handleSearch = () => {
