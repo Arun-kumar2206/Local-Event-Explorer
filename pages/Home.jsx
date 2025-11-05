@@ -1,7 +1,7 @@
 import BlurText from "../animations/BlurText";
 import { useState, memo } from "react";
 import { useNavigate } from "react-router-dom";
-
+import  search_logo  from "../images/search.png"
 const SearchBar = memo(function SearchBar() {
     const [searchValue, setSearchValue] = useState("");
     const [error, setError] = useState(false);
@@ -31,7 +31,7 @@ const SearchBar = memo(function SearchBar() {
                 onKeyDown={(e) => e.key === 'Enter' && handleSearchAndNavigate()}
             />
             <button className="search-button" onClick={handleSearchAndNavigate}>
-                <img src="../images/search.png" alt="Search" />
+                <img src={search_logo} alt="Search" />
             </button>
             {error && <div className="error-message">Please enter a location before searching</div>}
         </div>
